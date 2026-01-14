@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Poem for Richa 🌸</title>
+  <style>
+    :root {
+      --bg: #fff6fb;
+      --card: #ffffff;
+      --accent: #ff7aa2;
+      --accent-2: #c8a4ff;
+      --text: #2a2a2a;
+      --muted: #7a7a7a;
+      --shadow: 0 20px 60px rgba(0,0,0,.08), 0 6px 20px rgba(0,0,0,.06);
+      --radius: 24px;
+    }
+
+    html, body { height: 100%; margin:0; }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans";
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Hearts floating behind content */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .heart {
+      position: absolute;
+      font-size: 18px;
+      opacity: .35;
+      animation: floatHeart 6s ease-in-out infinite alternate;
+    }
+    @keyframes floatHeart {
+      0% { transform: translateY(0) translateX(0) rotate(0deg);}
+      50% { transform: translateY(-20px) translateX(10px) rotate(10deg);}
+      100% { transform: translateY(0) translateX(0) rotate(0deg);}
+    }
+
+    /* Cherry blossoms floating in front */
+    .blossoms {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3; /* in front of everything */
+    }
+    .blossom {
+      position: absolute;
+      font-size: 18px;
+      color: pink;
+      opacity: 0.7;
+      animation: drift 10s linear infinite;
+    }
+    @keyframes drift {
+      0% { transform: translate(100vw, -20px) rotate(0deg); opacity:0.7;}
+      100% { transform: translate(-20vw, 120vh) rotate(360deg); opacity:0;}
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 2; /* card above hearts, below blossoms */
+      display: grid;
+      place-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    .card {
+      width: min(900px, 92vw);
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.98));
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 28px 28px 20px;
+      border: 1px solid rgba(255, 170, 203, .35);
+      backdrop-filter: blur(6px);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .title { font-size: clamp(26px, 3.2vw, 40px); margin:4px 0 12px; }
+    .subtitle { color: var(--muted); margin:0 0 18px; font-size:14px; }
+    .divider { height:3px; width:120px; margin:14px auto 18px; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
+
+    .image { margin: 20px auto; display:block; max-width:300px; height:auto; border-radius:16px; box-shadow:var(--shadow); }
+    .poem { line-height:1.65; font-size:16px; background:#fff; border:1px dashed rgba(255,122,162,.5); border-radius:calc(var(--radius)-6px); padding:18px 16px; max-height:66vh; overflow:auto; white-space:pre-wrap; text-align:center; margin-top:20px; }
+
+    .actions { display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+    button { appearance:none; border:0; cursor:pointer; font-weight:600; border-radius:999px; padding:12px 18px; box-shadow:var(--shadow); background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; transition: transform .05s ease; }
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    .footer { text-align:center; margin-top:18px; color:var(--muted); font-size:13px; }
+  </style>
+</head>
+<body>
+
+  <div class="hearts" aria-hidden="true"></div>
+  <div class="blossoms" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1 class="title">A Poem for Richa</h1>
+      <p class="subtitle">for the one who captured my heart</p>
+      <div class="divider"></div>
+
+      <img src="https://i.imgur.com/Mw90JQZ.jpeg" alt="Richa" class="image" />
+
+      <div class="poem" id="poemText">
+I didn’t know your name that day,
+Just music, motion, crowded air.
+I danced, I laughed, but still my eyes
+Kept finding you seating there.
+
+Dark liner framing quiet eyes,
+Nails painted with a careful art.
+A stranger met in passing time,
+Yet somehow stayed inside my heart.
+
+When you stepped off, the bus moved on,
+The noise returned, the moment gone.
+I never spoke, no word, no sign
+Still, I remember you all this time.
+
+I found your name through borrowed lines,
+A search not simple, not unkind.
+
+I followed first, you followed back,
+And hope grew louder in my mind.
+
+We laugh, we talk, your charm shines,
+Though sometimes silence fills the space.
+Maybe life keeps you busy,
+Or maybe I just need to know my place?
+
+I lift my hopes a little high,
+Afraid they’ll fall too deep,
+Yet still I wish when nights feel heavy,
+You’d be the warmth I get to keep.
+
+— Richa
+      </div>
+
+      <div class="actions">
+        <button onclick="window.print()">Print / Save as PDF</button>
+        <button onclick="copyPoem()">Copy Text</button>
+      </div>
+      <div class="footer">Made with ♡ just for you</div>
+    </div>
+  </div>
+
+  <script>
+    const hearts = document.querySelector('.hearts');
+    const blossoms = document.querySelector('.blossoms');
+    const W = () => window.innerWidth;
+    const H = () => window.innerHeight;
+    const random = (min,max) => Math.random()*(max-min)+min;
+    const colors = ['#ff0000','#ff7aa2','#000000']; // red, pink, black
+
+    // Hearts floating behind
+    const makeHeart = () => {
+      for(let i=0;i<5;i++){  // spawn 5 hearts at once
+        const h = document.createElement('span');
+        h.className = 'heart';
+        h.textContent = '❤';
+        h.style.left = random(0, W()) + 'px';
+        h.style.top = random(0, H()) + 'px';
+        h.style.color = colors[Math.floor(random(0,colors.length))];
+        h.style.fontSize = random(14,26)+'px';
+        hearts.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+      }
+    }
+    setInterval(makeHeart, 500); // faster spawn for dense hearts
+
+    // Cherry blossoms in front
+    const makeBlossom = () => {
+      for(let i=0;i<5;i++){  // spawn 5 blossoms at once
+        const b = document.createElement('span');
+        b.className = 'blossom';
+        b.textContent = '🌸';
+        b.style.left = random(0, W()) + 'px';
+        b.style.top = '-20px';
+        b.style.fontSize = random(16,28)+'px';
+        b.style.animationDuration = random(8,12)+'s';
+        blossoms.appendChild(b);
+        setTimeout(() => b.remove(), 12000);
+      }
+    }
+    setInterval(makeBlossom, 800);
+
+    // Copy poem function
+    function copyPoem() {
+      const txt = document.getElementById('poemText').innerText;
+      navigator.clipboard.writeText(txt).then(() => alert('Poem copied to clipboard.'));
+    }
+  </script>
+</body>
+</html>
